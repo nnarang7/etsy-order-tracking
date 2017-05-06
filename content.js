@@ -1,12 +1,4 @@
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if( request.message === "clicked_browser_action" ) {
-    	addOrderDiv();
-
-      chrome.runtime.sendMessage({"message": "add_divs"});
-    }
-  }
-);
+addOrderDiv();
 
 function addOrderDiv() {
 	console.log("Creating divs...");
@@ -56,8 +48,6 @@ function addOrderDiv() {
 	chrome.storage.sync.get(all_ids, function(values) {
 		for (var i = 0; i < all_ids.length; i++) {
 			update_div(all_ids[i], values[all_ids[i]]);
-			console.log(all_ids[i]);
-			console.log(values[all_ids[i]]);
 		}
 	});	
 }
