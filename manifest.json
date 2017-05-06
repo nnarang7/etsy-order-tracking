@@ -1,0 +1,29 @@
+{
+	"manifest_version": 2,
+	"name": "Etsy Order Tracking",
+	"version": "1.0",
+
+	"description": "A way to track and collect completed Etsy orders",
+	"author": "Natasha Narang",
+
+	"background": {
+		"scripts": ["background.js"]
+	},
+
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.etsy.com/your/orders/sold?ref=seller-platform-mcnav"
+			],
+			"js": ["jquery-3.2.1.min.js", "content.js"]
+		}
+	],
+
+	"browser_action": {
+		"default_icon": "etsy.png"
+	},
+
+	"permissions": [
+		"storage"
+	]
+}
