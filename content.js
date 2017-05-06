@@ -28,15 +28,30 @@ function addOrderDiv() {
 
 	var orderComplete = function(e) {
 		var jquery_checkbox = $(this);
+		var checkbox_element = jquery_checkbox.find('input');
+		var checkbox_val = checkbox_element.is(':checked');
 		checkbox_order_id = jquery_checkbox.closest('.order').attr('data-receipt-id');
-		completedAction(checkbox_order_id);		
+		completedAction(checkbox_order_id, checkbox_val);		
 	};
 
 	for (var i = 0; i < all_checkboxes.length; i++) {
-		all_checkboxes[i].addEventListener('click', orderComplete, false);
+		all_checkboxes[i].addEventListener('change', orderComplete, false);
 	}
 }
 
-function completedAction(order_id) {
-	console.log("Congrats - you completed order id " + order_id + "!");
+function completedAction(order_id, val) {
+	if (val) {
+		console.log("Congrats - you completed order id " + order_id + "!");
+	} else {
+		console.log("Oops - looks like you didn't complete order " + order_id + "!");
+	}
+
+	var to_add = {}
+	to_add[order_id] = val;
+
+	chrome.storage.sync.set(to_add, function() {
+		chrome.storage.sync.get(order_id, function(value) {
+			console.log("Order status updated: ", order_id, value[order_id]);
+		});		
+	});
 }

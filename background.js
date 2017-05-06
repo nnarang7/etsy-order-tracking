@@ -12,3 +12,10 @@ chrome.runtime.onMessage.addListener(
 			// chrome.tabs.create({"url": request.url})
 		}
 	});
+
+chrome.storage.onChanged.addListener(function(changes, areaName) {
+	for (key in changes) {
+		var storageChange = changes[key];
+		console.log(key, namespace, storageChange.oldValue, storageChange.newValue);
+	}
+});
