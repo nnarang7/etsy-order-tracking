@@ -15,7 +15,13 @@
 			"matches": [
 				"https://www.etsy.com/your/orders/sold?ref=seller-platform-mcnav"
 			],
-			"js": ["jquery-3.2.1.min.js", "content.js"]
+			"js": ["jquery-3.2.1.min.js", "orders.js"]
+		},
+		{
+			"matches": [
+				"https://www.etsy.com/conversations?ref=seller-platform-mcnav"
+			],
+			"js": ["jquery-3.2.1.min.js", "conversations.js"]
 		}
 	],
 

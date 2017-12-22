@@ -3,7 +3,7 @@ addOrderDiv();
 function addOrderDiv() {
 	console.log("Creating divs...");
 	var order_div = document.createElement('div');
-	order_div.innerText = "Complete!   ";
+	order_div.innerText = "Mark your order as complete:   ";
 	order_div.className = "user-notes completed-order";
 	order_div.style.color = 'white';
 	order_div.style.backgroundColor = '#f4c842';
@@ -17,7 +17,7 @@ function addOrderDiv() {
 
 	console.log("Adding divs...");
 	id_count = 0;
-	$( "div[class = 'user-notes']" ).after(order_div);
+	// $( "div[class = 'user-notes']" ).after(order_div);
 
 	var all_checkboxes = document.getElementsByClassName("completed-order");
 
@@ -25,9 +25,6 @@ function addOrderDiv() {
 		var jquery_checkbox = $(this);
 		var checkbox_element = jquery_checkbox.find('input');
 		var checkbox_val = checkbox_element.is(':checked');
-		if (checkbox_val) {
-			// this.innerText = "test";
-		}
 		checkbox_order_id = jquery_checkbox.closest('.order').attr('data-receipt-id');
 		completedAction(this.id, checkbox_order_id, checkbox_val);		
 	};
@@ -53,21 +50,29 @@ function addOrderDiv() {
 }
 
 function update_div(id, val) {
-	to_update = document.getElementById('completed-order-' + id);
-	checkbox_element = $(to_update).find('input');
+	to_update = $(document.getElementById('completed-order-' + id));
+	console.log(to_update);
+	checkbox_element = to_update.find('input');
+	console.log(checkbox_element);
 
 	if (val) {
-		checkbox_element.val(true);
-		checkbox_element.prop('checked', true);
+		new_html = to_update.html().replace("Complete!", "Order complete! Nice work!	");
+		new_html.replace("false", "true");
+		new_html = new_html.replace(">", " checked>");
+		console.log(new_html);
 
-		to_update.style.color = 'white';
-		to_update.style.backgroundColor = 'green';
+		$(document.getElementById('completed-order-' + id)).html(new_html);
+		$(document.getElementById('completed-order-' + id)).css("color", 'white');
+		$(document.getElementById('completed-order-' + id)).css("backgroundColor", 'green');
 	} else {
-		checkbox_element.val(false);
-		checkbox_element.prop('checked', false);
-		
-		to_update.style.color = 'white';
-		to_update.style.backgroundColor = '#f4c842';		
+		new_html = to_update.html().replace("Complete!", 'Mark your order as completed!   ');
+		new_html = new_html.replace("true", "false")
+		new_html = new_html.replace('checked="">', ">")
+		console.log(new_html);
+		$(document.getElementById('completed-order-' + id)).html(new_html);
+
+		$(document.getElementById('completed-order-' + id)).css("color", 'white');
+		$(document.getElementById('completed-order-' + id)).css("backgroundColor", '#f4c842');	
 	}
 }
 
@@ -75,17 +80,30 @@ function completedAction(checkbox_div_id, order_id, val) {
 	console.log(checkbox_div_id);
 	checkbox_div = document.getElementById(checkbox_div_id);
 	jquery_checkbox_div = $(checkbox_div);
+	console.log(jquery_checkbox_div)
 
 	if (val) {
 		console.log("Congrats - you completed order id " + order_id + "!");
-		checkbox_div.style.color = 'white';
-		checkbox_div.style.backgroundColor = 'green';
-		// jquery_checkbox_text.innerText = 'Order complete! Nice work!   ';
+		document.getElementById(checkbox_div_id).style.color = 'white';
+		document.getElementById(checkbox_div_id).style.backgroundColor = 'green';
+
+		new_html = jquery_checkbox_div.html().replace("Mark your order as completed!", "Order complete! Nice work!	");
+		console.log(new_html);
+		new_html.replace("false", "true");
+		new_html = new_html.replace(">", " checked>");
+		console.log(new_html);
+		$(document.getElementById(checkbox_div_id)).html(new_html);
+		console.log($(checkbox_div).html());
 	} else {
 		console.log("Oops - looks like you didn't complete order " + order_id + ".");
 		checkbox_div.style.color = 'white';
 		checkbox_div.style.backgroundColor = '#f4c842';
-		// jquery_checkbox_text.innerText = 'Mark your order as completed!   ';
+
+		new_html = jquery_checkbox_div.html().replace("Order complete! Nice work!", "Mark your order as completed!");
+		new_html = new_html.replace("true", "false");
+		new_html = new_html.replace('checked="">', ">");
+		console.log(new_html);
+		$(document.getElementById(checkbox_div_id)).html(new_html);
 	}
 
 	var to_add = {}
