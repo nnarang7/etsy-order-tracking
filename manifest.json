@@ -19,7 +19,7 @@
 		},
 		{
 			"matches": [
-				"https://www.etsy.com/conversations?ref=seller-platform-mcnav"
+				"https://www.etsy.com/conversations/*"
 			],
 			"js": ["jquery-3.2.1.min.js", "conversations.js"]
 		}
